@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "telegramm-bot"
+version = "0.1.0"
+description = "Create telegramm-bot"
+authors = ["Евгений <prokofev_619@mail.ru>"]
+readme = "README.md"
+packages = [{include = "telegramm_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^3.13.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
