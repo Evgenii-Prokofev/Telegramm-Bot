@@ -4,7 +4,7 @@ from environs import Env
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, BotCommand
 
 
 env = Env()  # Создаём экземпляр класса Env 
@@ -24,6 +24,22 @@ users = {}
 # Функция возвращающая случайное целое число от 1 до 100
 def get_random_number() -> int:
     return random.randint(1, 100)
+
+
+# Создаем асинхронную функцию
+async def set_main_menu(bot: Bot):
+
+    # Создаем список с командами и их описанием для кнопки menu
+    main_menu_commands = [
+        BotCommand(command='/help',
+                   description='Справка по работе бота'),
+        BotCommand(command='/stat',
+                   description='Статистика'),
+        BotCommand(command='/cancel',
+                   description='Выход')
+    ]
+
+    await bot.set_my_commands(main_menu_commands)
 
 
 # Этот хэндлер будет срабатывать на команду "/start"
@@ -162,6 +178,11 @@ async def process_other_answers(message: Message):
             'Я довольно ограниченный бот, давайте '
             'просто сыграем в игру?'
         )
+        
+
+# Регистрируем асинхронную функцию в диспетчере,
+# которая будет выполняться на старте бота,
+dp.startup.register(set_main_menu)
 
 
 if __name__ == '__main__':
