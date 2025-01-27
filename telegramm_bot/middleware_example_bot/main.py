@@ -42,8 +42,12 @@ async def main() -> None:
     dp.include_router(other_router)
     
     # Здесь будем регистрировать миддлвари
-    
-    
+    dp.update.outer_middleware(FirstOutherMiddleware())
+    user_router.callback_query.outer_middleware(SecondOutherMiddleware())
+    other_router.message.outer_middleware(ThirdOutherMiddleware())
+    user_router.message.middleware(FirstInnerMiddleware())
+    user_router.callback_query.middleware(SecondInnerMiddleware())
+    other_router.message.middleware(ThirdInnerMiddleware())
     
     # Запускаем polling
     await dp.start_polling(bot)
